@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Внутренние ресурсы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Анимированные круги на фоне */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            animation: float 20s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        body::before {
+            width: 500px;
+            height: 500px;
+            top: -150px;
+            left: -150px;
+        }
+
+        body::after {
+            width: 400px;
+            height: 400px;
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, 40px) scale(1.1); }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        /* Предупреждение о VPN */
+        .vpn-notice {
+            background: rgba(255, 255, 255, 0.95);
+            border-left: 4px solid #f59e0b;
+            border-radius: 12px;
+            padding: 18px 24px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .vpn-notice .icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .vpn-notice .text {
+            color: #4a5568;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .vpn-notice .text strong {
+            color: #d97706;
+        }
+
+        /* Сетка карточек */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /*grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));*/
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 32px 28px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .card-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: #ffffff;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: #718096;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .card-arrow {
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.3s ease;
+        }
+
+        .card:hover .card-arrow {
+            gap: 12px;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 30px; }
+            .header p { font-size: 15px; }
+            .vpn-notice { flex-direction: column; text-align: center; }
+            .card { padding: 24px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Корпоративный портал</h1>
+            <p>Единая точка входа во внутренние ресурсы компании</p>
+        </div>
+
+        <div class="vpn-notice">
+            <div class="icon"></div>
+            <div class="text">
+                <strong>Внимание!</strong> Все ресурсы ниже доступны только из корпоративной сети. 
+                Для работы извне сначала подключитесь к корпоративному <strong>VPN</strong>, 
+                затем откройте нужную ссылку.
+            </div>
+        </div>
+
+        <div class="cards">
+            <!-- База знаний -->
+            <a href="http://192.168.120.60/wiki/" class="card" target="_blank">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </div>
+                <div class="card-title">База знаний</div>
+                <div class="card-desc">Документация, инструкции и регламенты компании</div>
+                <div class="card-arrow">Перейти →</div>
+            </a>
+
+            <!-- Реестр доработок -->
+            <!-- 
+            <a href="http://192.168.120.62/" class="card" target="_blank">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+                </div>
+                <div class="card-title">Реестр доработок</div>
+                <div class="card-desc">Учёт и статус задач по доработке систем</div>
+                <div class="card-arrow">Перейти →</div>
+            </a>
+            -->
+            
+            <!-- FTP -->
+            <a href="ftp://78.30.214.175/" class="card" target="_blank">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 11v6"/><path d="M9 14l3 3 3-3"/></svg>
+                </div>
+                <div class="card-title">FTP-сервер</div>
+                <div class="card-desc">Файловое хранилище и обмен документами</div>
+                <div class="card-arrow">Перейти →</div>
+            </a>
+
+            <!-- Портал -->
+            <a href="https://portal.gkomega.ru/" class="card" target="_blank">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <div class="card-title">Портал Omega</div>
+                <div class="card-desc">Корпоративный портал "Омега"</div>
+                <div class="card-arrow">Перейти →</div>
+            </a>
+
+            <!-- YouTrack -->
+            <a href="https://yt.omegafuture.ru/" class="card" target="_blank">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div class="card-title">YouTrack</div>
+                <div class="card-desc">Система управления задачами и баг-трекер</div>
+                <div class="card-arrow">Перейти →</div>
+            </a>
+
+        </div>
+
+        <div class="footer">
+            © 2026 Корпоративный портал · Внутренний ресурс компании
+        </div>
+    </div>
+</body>
+</html>
